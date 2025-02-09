@@ -1,0 +1,26 @@
+.list {
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr) auto;
+  gap: 8px;
+}
+
+.list thead,
+.list tbody,
+.list tr {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  gap: 8px;
+}
+
+.list th {
+  text-align: left;
+}
+
+.list th[scope="row"] {
+  font-weight: normal;
+}
+
+.list td {
+  text-align: center;
+}

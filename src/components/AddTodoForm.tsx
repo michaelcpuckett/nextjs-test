@@ -3,33 +3,33 @@
 import { client } from "@/lib/client";
 import { useActionState } from "react";
 
-export function AddUserForm({
-  setUsers,
+export function AddTodoForm({
+  setTodos,
 }: {
-  setUsers: React.Dispatch<
+  setTodos: React.Dispatch<
     React.SetStateAction<{ id: string; name: string }[]>
   >;
 }) {
-  const addUser = async (_: unknown, formData: FormData) => {
+  const addTodo = async (_: unknown, formData: FormData) => {
     const name = formData.get("name");
 
     if (typeof name !== "string") {
       return;
     }
 
-    const user = { name };
-    const res = await client.user.create.$post(user);
+    const todo = { name };
+    const res = await client.todo.create.$post(todo);
     const json = await res.json();
 
     if (json.success) {
-      setUsers((users) => [...users, json.result]);
+      setTodos((todos) => [...todos, json.result]);
       return Promise.resolve(json);
     } else {
       return Promise.reject(json);
     }
   };
 
-  const [, submitAction, isSubmitActionPending] = useActionState(addUser, null);
+  const [, submitAction, isSubmitActionPending] = useActionState(addTodo, null);
 
   return (
     <form action={submitAction}>
@@ -38,7 +38,7 @@ export function AddUserForm({
         <input type="text" name="name" disabled={isSubmitActionPending} />
       </label>
       <button type="submit" disabled={isSubmitActionPending}>
-        Add User
+        Add Todo
       </button>
     </form>
   );

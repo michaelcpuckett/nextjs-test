@@ -1,6 +1,6 @@
 import { j } from "./jstack";
 import { adRouter } from "./routers/ad";
-import { userRouter } from "./routers/user";
+import { todoRouter } from "./routers/todo";
 
 /**
  * This is your base API.
@@ -17,7 +17,7 @@ const api = j
  * All routers in /server/routers should be added here manually.
  */
 const appRouter = j.mergeRouters(api, {
-  user: userRouter,
+  todo: todoRouter,
   ad: adRouter,
 });
 

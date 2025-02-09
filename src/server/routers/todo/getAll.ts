@@ -1,6 +1,6 @@
 import { publicProcedure } from "../../jstack";
-import { users } from "./db";
+import { todos } from "./db";
 
 export default publicProcedure.get(({ c: context }) => {
-  return context.json(users);
+  return context.json(todos);
 });
