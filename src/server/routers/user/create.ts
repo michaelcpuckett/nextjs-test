@@ -4,11 +4,11 @@ import { publicProcedure } from "../../jstack";
 import { users } from "./db";
 
 export default publicProcedure
-  .input(z.object({ name: z.string() }))
+  .input(z.object({ name: z.string().nonempty() }))
   .post(({ c, input }) => {
     const id = uuid();
     const user = { id, name: input.name };
     users.push(user);
 
-    return c.json({ message: "User created successfully!", result: user });
+    return c.json({ success: true, result: user });
   });

@@ -21,9 +21,12 @@ export function AddUserForm({
     const res = await client.user.create.$post(user);
     const json = await res.json();
 
-    setUsers((users) => [...users, json.result]);
-
-    return Promise.resolve(json);
+    if (json.success) {
+      setUsers((users) => [...users, json.result]);
+      return Promise.resolve(json);
+    } else {
+      return Promise.reject(json);
+    }
   };
 
   const [, submitAction, isSubmitActionPending] = useActionState(addUser, null);

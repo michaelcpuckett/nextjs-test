@@ -1,5 +1,5 @@
 import Advertisement from "@/components/Advertisement";
-import UsersPage from "@/components/UsersPageServer";
+import UsersPage from "@/components/UsersPage.server";
 import { Metadata } from "next";
 import { Fragment, Suspense } from "react";
 
