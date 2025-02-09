@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { j, publicProcedure } from "../jstack";
+import { j, publicProcedure } from "../../jstack";
 
 export const adRouter = j.router({
   get: publicProcedure

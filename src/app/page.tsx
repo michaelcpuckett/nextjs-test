@@ -1,6 +1,5 @@
-import { AddUserForm } from "@/components/AddUserForm";
 import Advertisement from "@/components/Advertisement";
-import UsersList from "@/components/UsersList";
+import UsersPage from "@/components/UsersPageServer";
 import { Metadata } from "next";
 import { Fragment, Suspense } from "react";
 
@@ -13,8 +12,7 @@ export default function Home() {
     <Fragment>
       <main>
         <h1>Users</h1>
-        <UsersList />
-        <AddUserForm />
+        <UsersPage />
       </main>
       <Suspense fallback={<div>Loading...</div>}>
         <Advertisement />

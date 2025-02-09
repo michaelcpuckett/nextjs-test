@@ -3,7 +3,13 @@
 import { client } from "@/lib/client";
 import { useActionState } from "react";
 
-export function AddUserForm() {
+export function AddUserForm({
+  setUsers,
+}: {
+  setUsers: React.Dispatch<
+    React.SetStateAction<{ id: string; name: string }[]>
+  >;
+}) {
   const addUser = async (_: unknown, formData: FormData) => {
     const name = formData.get("name");
 
@@ -13,20 +19,24 @@ export function AddUserForm() {
 
     const user = { name };
     const res = await client.user.create.$post(user);
+    const json = await res.json();
 
-    return res.json();
+    setUsers((users) => [...users, json.result]);
+
+    return Promise.resolve(json);
   };
 
-  const [submitActionState, submitAction] = useActionState(addUser, null);
+  const [, submitAction, isSubmitActionPending] = useActionState(addUser, null);
 
   return (
     <form action={submitAction}>
       <label>
         Name:
-        <input type="text" name="name" />
+        <input type="text" name="name" disabled={isSubmitActionPending} />
       </label>
-      <button type="submit">Add User</button>
-      <output>{submitActionState?.message ?? "..."}</output>
+      <button type="submit" disabled={isSubmitActionPending}>
+        Add User
+      </button>
     </form>
   );
 }

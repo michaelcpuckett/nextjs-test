@@ -1,6 +1,6 @@
 import { j } from "./jstack";
-import { adRouter } from "./routers/adRouter";
-import { userRouter } from "./routers/userRouter";
+import { adRouter } from "./routers/ad";
+import { userRouter } from "./routers/user";
 
 /**
  * This is your base API.

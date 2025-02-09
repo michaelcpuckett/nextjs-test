@@ -1,15 +1,14 @@
-"use server";
-
-import { client } from "@/lib/client";
-
-export default async function UsersList() {
-  const usersRes = await client.user.getAll.$get();
-  const users = await usersRes.json();
-
+export function UsersList({
+  users,
+}: {
+  users: { id: string; name: string }[];
+}) {
   return (
     <ul>
       {users.map((user) => (
-        <li key={user.name}>{user.name}</li>
+        <li key={user.id} data-id={user.id}>
+          {user.name}
+        </li>
       ))}
     </ul>
   );
