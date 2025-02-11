@@ -11,11 +11,11 @@ export default function TodosPageClient({
 }: {
   todos: { id: string; name: string }[];
 }) {
-  const setTodos = useTodoStore((state) => state.setTodos);
+  const initializeTodosStore = useTodoStore((state) => state.initialize);
 
   useEffect(() => {
-    setTodos(initialTodos);
-  }, [setTodos, initialTodos]);
+    initializeTodosStore(initialTodos);
+  }, [initializeTodosStore, initialTodos]);
 
   return (
     <main>
