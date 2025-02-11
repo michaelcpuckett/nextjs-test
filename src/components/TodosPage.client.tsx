@@ -20,7 +20,7 @@ export default function TodosPageClient({
   return (
     <main>
       <h1>Todos</h1>
-      <TodosList />
+      <TodosList initialTodos={initialTodos} />
       <ErrorBoundary
         fallback={<div>Something went wrong! Try again later.</div>}
       >

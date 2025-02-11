@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Todo } from "./types";
 
 interface TodoState {
-  todos: Todo[];
+  todos: Todo[] | null;
   add: (todo: Todo) => void;
   remove: (id: string) => void;
   update: (id: string, name: string) => void;
@@ -10,13 +10,15 @@ interface TodoState {
 }
 
 const useTodoStore = create<TodoState>()((set) => ({
-  todos: [],
-  add: (todo) => set((state) => ({ todos: [...state.todos, todo] })),
+  todos: null,
+  add: (todo) => set((state) => ({ todos: [...(state.todos || []), todo] })),
   remove: (id) =>
-    set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id) })),
+    set((state) => ({
+      todos: (state.todos || []).filter((todo) => todo.id !== id),
+    })),
   update: (id, name) =>
     set((state) => ({
-      todos: state.todos.map((todo) =>
+      todos: (state.todos || []).map((todo) =>
         todo.id === id ? { ...todo, name } : todo
       ),
     })),
