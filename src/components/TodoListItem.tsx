@@ -1,23 +1,22 @@
 "use client";
 
 import { client } from "@/lib/client";
+import useTodoStore from "@/lib/store";
 import { useActionState } from "react";
 
 export default function TodoListItem({
   todo,
-  setTodos,
 }: {
   todo: { id: string; name: string };
-  setTodos: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }[]>
-  >;
 }) {
+  const removeTodoFromStore = useTodoStore((state) => state.remove);
+
   const deleteTodo = async () => {
-    const res = await client.todo.create.$post(todo);
+    const res = await client.todo.delete.$post(todo);
     const json = await res.json();
 
     if (json.success) {
-      setTodos((todos) => todos.filter((u) => u.id !== todo.id));
+      removeTodoFromStore(todo.id);
       return Promise.resolve(json);
     } else {
       return Promise.reject(json);

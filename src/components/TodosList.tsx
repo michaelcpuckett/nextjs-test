@@ -1,16 +1,11 @@
+import useTodoStore from "@/lib/store";
 import { ErrorBoundary } from "react-error-boundary";
 import TodoListItem from "./TodoListItem";
 import styles from "./TodosList.module.css";
 
-export function TodosList({
-  todos,
-  setTodos,
-}: {
-  todos: { id: string; name: string }[];
-  setTodos: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }[]>
-  >;
-}) {
+export function TodosList() {
+  const todos = useTodoStore((state) => state.todos);
+
   return (
     <table className={styles.list}>
       <thead>
@@ -25,7 +20,7 @@ export function TodosList({
             key={todo.id}
             fallback={<div>Something went wrong! Try again later.</div>}
           >
-            <TodoListItem todo={todo} setTodos={setTodos} />
+            <TodoListItem todo={todo} />
           </ErrorBoundary>
         ))}
       </tbody>

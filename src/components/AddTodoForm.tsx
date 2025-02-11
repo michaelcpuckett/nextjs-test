@@ -1,15 +1,12 @@
 "use client";
 
 import { client } from "@/lib/client";
+import useTodoStore from "@/lib/store";
 import { useActionState } from "react";
 
-export function AddTodoForm({
-  setTodos,
-}: {
-  setTodos: React.Dispatch<
-    React.SetStateAction<{ id: string; name: string }[]>
-  >;
-}) {
+export function AddTodoForm() {
+  const addTodoToStore = useTodoStore((state) => state.add);
+
   const addTodo = async (_: unknown, formData: FormData) => {
     const name = formData.get("name");
 
@@ -22,7 +19,7 @@ export function AddTodoForm({
     const json = await res.json();
 
     if (json.success) {
-      setTodos((todos) => [...todos, json.result]);
+      addTodoToStore(json.result);
       return Promise.resolve(json);
     } else {
       return Promise.reject(json);
