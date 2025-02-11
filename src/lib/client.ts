@@ -6,6 +6,9 @@ export const client = createClient<AppRouter>({
 });
 
 function getBaseUrl() {
-  // 👇 Adjust for wherever you deploy
+  if (process.env.NODE_ENV === "development") {
+    return "http://localhost:3000";
+  }
+
   return "https://nextjs-test-737158727299.us-central1.run.app";
 }

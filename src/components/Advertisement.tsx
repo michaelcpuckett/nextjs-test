@@ -8,7 +8,7 @@ export default async function Advertisement() {
 
   return (
     <aside>
-      <h2>Advertisement</h2>
+      <h2>Lazy Loaded Content</h2>
       <a href={ad.url} data-id={ad.id}>
         <h3>{ad.heading}</h3>
         <p>{ad.bodyCopy}</p>
