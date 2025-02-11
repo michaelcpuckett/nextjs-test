@@ -1,3 +1,4 @@
+import AdFallback from "@/components/AdFallback";
 import Advertisement from "@/components/Advertisement";
 import TodosPageServer from "@/components/TodosPage.server";
 import { Metadata } from "next";
@@ -11,7 +12,7 @@ export default function Home() {
   return (
     <Fragment>
       <TodosPageServer />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<AdFallback />}>
         <Advertisement />
       </Suspense>
     </Fragment>

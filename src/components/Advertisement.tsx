@@ -1,13 +1,14 @@
 "use server";
 
 import { client } from "@/lib/client";
+import styles from "./Advertisement.module.css";
 
 export default async function Advertisement() {
   const adRes = await client.ad.get.$get({ id: "abc123" });
   const ad = await adRes.json();
 
   return (
-    <aside>
+    <aside className={styles.container}>
       <h2>Lazy Loaded Content</h2>
       <a href={ad.url} data-id={ad.id}>
         <h3>{ad.heading}</h3>

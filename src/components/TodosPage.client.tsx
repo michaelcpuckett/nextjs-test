@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { AddTodoForm } from "./AddTodoForm";
 import { TodosList } from "./TodosList";
+import styles from "./TodosPage.module.css";
 
 export default function TodosPageClient({
   todos: initialTodos,
@@ -18,7 +19,7 @@ export default function TodosPageClient({
   }, [initializeTodosStore, initialTodos]);
 
   return (
-    <main>
+    <main className={styles.container}>
       <h1>Todos</h1>
       <TodosList initialTodos={initialTodos} />
       <ErrorBoundary

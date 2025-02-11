@@ -3,6 +3,7 @@
 import { client } from "@/lib/client";
 import useTodoStore from "@/lib/store";
 import { useActionState } from "react";
+import styles from "./AddTodoForm.module.css";
 
 export function AddTodoForm() {
   const addTodoToStore = useTodoStore((state) => state.add);
@@ -29,7 +30,7 @@ export function AddTodoForm() {
   const [, submitAction, isSubmitActionPending] = useActionState(addTodo, null);
 
   return (
-    <form action={submitAction}>
+    <form action={submitAction} className={styles.form} autoComplete="off">
       <label>
         Name:
         <input type="text" name="name" disabled={isSubmitActionPending} />
