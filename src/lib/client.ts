@@ -7,6 +7,6 @@ export const client = createClient<AppRouter>({
 
 function getBaseUrl() {
   // 👇 Adjust for wherever you deploy
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  if (process.env.PORT) return `http://localhost:${process.env.PORT}`;
   return `http://localhost:3000`;
 }
