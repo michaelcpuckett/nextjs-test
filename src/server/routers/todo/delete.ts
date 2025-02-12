@@ -4,7 +4,9 @@ import { todos } from "./db";
 
 export default publicProcedure
   .input(z.object({ id: z.string().nonempty() }))
-  .post(({ c, input }) => {
+  .post(async ({ c, input }) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const index = todos.findIndex((todo) => todo.id === input.id);
 
     todos.splice(index, 1);

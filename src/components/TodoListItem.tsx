@@ -9,16 +9,19 @@ export default function TodoListItem({
 }: {
   todo: { id: string; name: string };
 }) {
-  const removeTodoFromStore = useTodoStore((state) => state.remove);
+  const addOptimisticTodo = useTodoStore((state) => state.add);
+  const removeOptimisticTodo = useTodoStore((state) => state.remove);
 
   const deleteTodo = async () => {
+    removeOptimisticTodo(todo.id);
+
     const res = await client.todo.delete.$post(todo);
     const json = await res.json();
 
     if (json.success) {
-      removeTodoFromStore(todo.id);
       return Promise.resolve(json);
     } else {
+      addOptimisticTodo(todo);
       return Promise.reject(json);
     }
   };

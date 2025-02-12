@@ -3,3 +3,37 @@
   padding: 130px 0;
   margin: 0 auto;
 }
+
+.list {
+  display: grid;
+  grid-template-columns: minmax(0px, 1fr) auto;
+  border-left: 1px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
+}
+
+.list thead,
+.list tbody,
+.list tr {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+.list th {
+  text-align: left;
+  padding: 4px 8px;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 4px 8px;
+}
+
+.list th[scope="row"] {
+  font-weight: normal;
+}
+
+.list td {
+  text-align: center;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 4px 8px;
+}

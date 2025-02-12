@@ -1,41 +1,47 @@
-"use client";
-
-import { client } from "@/lib/client";
 import useTodoStore from "@/lib/store";
 import { useActionState } from "react";
 import styles from "./AddTodoForm.module.css";
+import { addTodo } from "./actions";
 
 export function AddTodoForm() {
-  const addTodoToStore = useTodoStore((state) => state.add);
+  const isClient = typeof window !== "undefined";
+  const addOptimisticTodo = useTodoStore((state) => state.add);
+  const removeOptimisticTodo = useTodoStore((state) => state.remove);
 
-  const addTodo = async (_: unknown, formData: FormData) => {
-    const name = formData.get("name");
+  const add = isClient
+    ? async (_: unknown, formData: FormData) => {
+        addOptimisticTodo({
+          id: "optimistic",
+          name: formData.get("name") as string,
+        });
 
-    if (typeof name !== "string") {
-      return;
-    }
+        return await addTodo(_, formData)
+          .catch(() => {
+            removeOptimisticTodo("optimistic");
 
-    const todo = { name };
-    const res = await client.todo.create.$post(todo);
-    const json = await res.json();
+            throw new Error("Failed to add todo");
+          })
+          .then((res) => {
+            removeOptimisticTodo("optimistic");
 
-    if (json.success) {
-      addTodoToStore(json.result);
-      return Promise.resolve(json);
-    } else {
-      return Promise.reject(json);
-    }
-  };
+            if (res?.success) {
+              addOptimisticTodo(res.result);
+            }
 
-  const [, submitAction, isSubmitActionPending] = useActionState(addTodo, null);
+            return res;
+          });
+      }
+    : addTodo;
+
+  const [, action, isPending] = useActionState(add, null);
 
   return (
-    <form action={submitAction} className={styles.form} autoComplete="off">
+    <form action={action} className={styles.form} autoComplete="off">
       <label>
         Name:
-        <input type="text" name="name" disabled={isSubmitActionPending} />
+        <input type="text" name="name" />
       </label>
-      <button type="submit" disabled={isSubmitActionPending}>
+      <button type="submit" disabled={isPending}>
         Add Todo
       </button>
     </form>
