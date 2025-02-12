@@ -1,11 +1,10 @@
-"use server";
-
 import { client } from "@/lib/client";
+import { use } from "react";
 import styles from "./Advertisement.module.css";
 
-export default async function Advertisement() {
-  const adRes = await client.ad.get.$get({ id: "abc123" });
-  const ad = await adRes.json();
+export default function Advertisement() {
+  const adRes = use(client.ad.get.$get({ id: "abc123" }));
+  const ad = use(adRes.json());
 
   return (
     <aside className={styles.container}>
