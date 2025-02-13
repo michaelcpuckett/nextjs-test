@@ -12,17 +12,17 @@ export default function TodosPageClient({
 }: {
   todos: { id: string; name: string }[];
 }) {
-  const [optimisticTodos, setOptimisticTodos] = useState(initialTodos);
+  const [todos, setTodos] = useState(initialTodos);
   const storeTodos = useTodoStore((state) => state.todos);
   const initializeTodosStore = useTodoStore((state) => state.initialize);
 
   useEffect(() => {
     if (!storeTodos) {
-      initializeTodosStore(optimisticTodos);
+      initializeTodosStore(todos);
     } else {
-      setOptimisticTodos(storeTodos);
+      setTodos(storeTodos);
     }
-  }, [storeTodos, optimisticTodos, initializeTodosStore]);
+  }, [storeTodos, todos, initializeTodosStore]);
 
   return (
     <main className={styles.container}>
@@ -35,7 +35,7 @@ export default function TodosPageClient({
           </tr>
         </thead>
         <tbody>
-          {optimisticTodos.map((todo) => (
+          {todos.map((todo) => (
             <ErrorBoundary
               key={todo.id}
               fallback={<div>Something went wrong! Try again later.</div>}
