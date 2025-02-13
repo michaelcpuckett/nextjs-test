@@ -5,6 +5,7 @@ import TodosList from "@/components/TodosList";
 import { client } from "@/lib/client";
 import { Metadata } from "next";
 import { Fragment, Suspense, use } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -20,7 +21,11 @@ export default function Home() {
       <main className={styles.container}>
         <h1>Todos</h1>
         <TodosList todos={todos} />
-        <AddTodoForm />
+        <ErrorBoundary
+          fallback={<div>Something went wrong! Try again later.</div>}
+        >
+          <AddTodoForm />
+        </ErrorBoundary>
       </main>
       <Suspense fallback={<AdFallback />}>
         <Advertisement />

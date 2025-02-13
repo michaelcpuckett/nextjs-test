@@ -2,7 +2,6 @@
 
 import useTodoStore from "@/lib/store";
 import { useActionState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import styles from "./AddTodoForm.module.css";
 import { addTodo as addTodoOnServer } from "./actions";
 
@@ -36,16 +35,14 @@ export function AddTodoForm() {
   const [, action, isPending] = useActionState(addTodo, null);
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong! Try again later.</div>}>
-      <form action={action} className={styles.form} autoComplete="off">
-        <label>
-          Name:
-          <input type="text" name="name" />
-        </label>
-        <button type="submit" disabled={isPending}>
-          Add Todo
-        </button>
-      </form>
-    </ErrorBoundary>
+    <form action={action} className={styles.form} autoComplete="off">
+      <label>
+        Name:
+        <input type="text" name="name" />
+      </label>
+      <button type="submit" disabled={isPending}>
+        Add Todo
+      </button>
+    </form>
   );
 }
